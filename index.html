@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Apostas ao Vivo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card mt-4">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0">Calculadora de Apostas ao Vivo</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <strong>Como funciona:</strong><br>
+                            1. Selecione o mercado desejado<br>
+                            2. Digite quanto apostou na primeira opção e a odd<br>
+                            3. Digite a % de lucro desejada<br>
+                            4. Digite a odd da segunda opção (e terceira se desejar)<br>
+                            5. Veja quanto apostar para garantir o lucro
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Selecione o Mercado:</label>
+                            <select class="form-select" id="tipoMercado">
+                                <option value="resultado">Resultado (Casa/Empate/Visitante)</option>
+                                <option value="escanteios">Escanteios (Mais/Menos/Exato)</option>
+                                <option value="cartoes">Cartões (Mais/Menos/Exato)</option>
+                                <option value="gols">Gols (Mais/Menos/Exato)</option>
+                            </select>
+                        </div>
+
+                        <form id="calc-form">
+                            <div class="card mb-3 border-primary">
+                                <div class="card-body">
+                                    <h5>Primeira aposta (já realizada)</h5>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class="form-label">Valor apostado:</label>
+                                            <input type="text" class="form-control" id="valorCasa" required>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label">Odd da <span class="label-opcao1">Casa</span>:</label>
+                                            <input type="text" class="form-control" id="oddCasa" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Lucro desejado (%):</label>
+                                <input type="text" class="form-control" id="lucroDesejado" value="10,00">
+                            </div>
+
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5>Odds atuais</h5>
+                                    <div class="odds-container">
+                                        <div class="odds-field">
+                                            <label class="form-label">Odd do <span class="label-opcao2">Empate</span>:</label>
+                                            <input type="text" class="form-control" id="oddEmpate">
+                                        </div>
+                                        <div class="odds-field">
+                                            <label class="form-label">Odd do <span class="label-opcao3">Visitante</span>:</label>
+                                            <input type="text" class="form-control" id="oddVisitante">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Valores para garantir lucro:</h5>
+                                <div id="resultados" class="mt-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- resetar cal -->
+    <div class="text-center mt-3">
+        <button id="resetButton" class="btn btn-warning">
+            <i class="fas fa-sync-alt"></i>
+            <span class="button-text">Reiniciar Calculadora</span>
+        </button>
+    </div>
+
+    <div class="donation-section">
+        <button id="toggleDonation" class="btn btn-primary w-100">Ajude a manter o projeto vivo, Obrigado!</button>
+        <div id="donationInfo" style="display: none;">
+            <div class="donation-item">
+                <div>
+                    <strong>Chave Pix Banco:</strong> Nubank - Alex Barroso Paz
+                    <div class="text-muted">ac849e24-8eca-458f-958d-5c3962d8701d</div>
+                </div>
+                <button>Copiar</button>
+            </div>
+            
+            <div class="donation-item">
+                <div>
+                    <strong>Carteira de CriptoMoeda:</strong>
+                    <div class="text-muted">0x4675C9Af826a658307b51eec460cBbfefa50Fea7</div>
+                </div>
+                <button>Copiar</button>
+            </div>
+            
+            <div class="donation-item">
+                <div>
+                    <strong>PicPay:</strong> Alex Barroso Paz
+                    <div class="text-muted">@alex.bpz</div>
+                </div>
+                <button>Copiar</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Calculadora de Proteção | Projeto desenvolvido por Dev. Alex Paz.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

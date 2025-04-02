@@ -1,0 +1,225 @@
+/* styles.css */
+:root {
+    --primary: #007bff;
+    --success: #198754;
+    --danger: #dc3545;
+    --bg-gradient: linear-gradient(135deg, #e7f3fe 0%, #d1e9fc 100%);
+}
+
+body {
+    background: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.lucro { color: var(--success); font-weight: bold; }
+.prejuizo { color: var(--danger); font-weight: bold; }
+
+/* Alinhamento dos campos de odds */
+.odds-container {
+    display: flex;
+    gap: 15px;
+}
+
+.odds-field {
+    flex: 1;
+}
+
+.donation-section {
+    margin: 20px auto;
+    background: var(--bg-gradient);
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 800px;
+}
+
+.donation-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    background: rgba(255,255,255,0.7);
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.donation-item:hover {
+    background: rgba(255,255,255,0.9);
+    transform: translateY(-2px);
+}
+
+.donation-item .content {
+    flex: 1;
+}
+
+.donation-item button {
+    height: fit-content;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    align-self: center;
+    min-width: 100px;
+}
+
+.donation-item button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+.toast-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    z-index: 1000;
+    animation: fadeInOut 2s ease;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, -40%); }
+    15% { opacity: 1; transform: translate(-50%, -50%); }
+    85% { opacity: 1; transform: translate(-50%, -50%); }
+    100% { opacity: 0; transform: translate(-50%, -60%); }
+}
+
+.form-control {
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+    height: 45px;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 20px;
+    background: #f1f1f1;
+}
+
+@media (max-width: 768px) {
+    .donation-item {
+        grid-template-columns: 1fr;
+    }
+    
+    .donation-item button {
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+
+    .odds-container {
+        flex-direction: column;
+    }
+}
+
+/* Estilo e animação do botão */
+#resetButton {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    padding: 10px 20px;
+}
+
+/* Efeito hover */
+#resetButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeito do ícone */
+#resetButton i {
+    display: inline-block;
+    margin-right: 5px;
+    transition: transform 0.5s ease;
+}
+
+#resetButton:hover i {
+    animation: girar 1s infinite linear;
+}
+
+/* Animação do texto ao clicar */
+#resetButton:active .button-text {
+    animation: spinText 1s forwards;
+}
+
+/* Keyframes para as animações */
+@keyframes girar {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spinText {
+    0% {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: rotate(180deg);
+        opacity: 0.5;
+        color: #ffd700;
+    }
+    100% {
+        transform: rotate(360deg);
+        opacity: 1;
+    }
+}
+
+/* Efeito de onda ao clicar */
+#resetButton::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+#resetButton:active::after {
+    animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(40, 40);
+        opacity: 0;
+    }
+}
