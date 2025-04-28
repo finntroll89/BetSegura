@@ -164,54 +164,25 @@ class Calculator {
             }
         }
 
-        // Calcula o total apostado (inclui apenas valores > 0)
-        // O total deve considerar apenas as duas primeiras apostas
-        let totalApostado = 0;
-        
-        if (this.firstEntryType === 'oddCasa' || this.secondEntryType === 'oddCasa') {
-            totalApostado += apostas.casa;
-        }
-        if (this.firstEntryType === 'oddEmpate' || this.secondEntryType === 'oddEmpate') {
-            totalApostado += apostas.empate;
-        }
-        if (this.firstEntryType === 'oddVisitante' || this.secondEntryType === 'oddVisitante') {
-            totalApostado += apostas.visitante;
-        }
+        // Calcula o total das apostas
+        const totalTodasApostas = (apostas.casa || 0) + (apostas.empate || 0) + (apostas.visitante || 0);
 
-        // Calcula os resultados (lucro/prejuízo) para cada cenário
+        // CORREÇÃO: Calcule os resultados usando o total de todas as apostas
         const resultados = {
-            casa: (oddCasa && apostas.casa) ? (apostas.casa * oddCasa - totalApostado) : null,
-            empate: (oddEmpate && apostas.empate) ? (apostas.empate * oddEmpate - totalApostado) : null,
-            visitante: (oddVisitante && apostas.visitante) ? (apostas.visitante * oddVisitante - totalApostado) : null
+            casa: (oddCasa && apostas.casa) ? (apostas.casa * oddCasa - totalTodasApostas) : null,
+            empate: (oddEmpate && apostas.empate) ? (apostas.empate * oddEmpate - totalTodasApostas) : null,
+            visitante: (oddVisitante && apostas.visitante) ? (apostas.visitante * oddVisitante - totalTodasApostas) : null
         };
 
-        // Se tiver uma terceira entrada, calcula o resultado específico para ela
-        if (terceiraEntryType) {
-            const totalDuasPrimeiras = totalApostado;
-            // Para a terceira opção, o total apostado inclui apenas as duas primeiras apostas
-            if (terceiraEntryType === 'oddCasa') {
-                resultados.casa = apostas.casa * oddCasa - (totalDuasPrimeiras + apostas.casa);
-            } else if (terceiraEntryType === 'oddEmpate') {
-                resultados.empate = apostas.empate * oddEmpate - (totalDuasPrimeiras + apostas.empate);
-            } else if (terceiraEntryType === 'oddVisitante') {
-                resultados.visitante = apostas.visitante * oddVisitante - (totalDuasPrimeiras + apostas.visitante);
-            }
-        }
+        // Não há mais necessidade de tratamento especial para a terceira entrada
+        // pois agora estamos usando o total de todas as apostas para todos os cálculos
 
-        this.mostrarResultados(apostas, totalApostado, resultados, terceiraEntryType);
+        this.mostrarResultados(apostas, totalTodasApostas, resultados, null);
     }
 
     mostrarResultados(apostas, totalApostado, resultados, terceiraEntryType) {
         const marketType = document.getElementById('tipoMercado').value;
         const labels = this.marketLabels[marketType];
-
-        // Identifica se cada opção está nas duas primeiras entradas
-        const casaNasDuasPrimeiras = (this.firstEntryType === 'oddCasa' || this.secondEntryType === 'oddCasa');
-        const empateNasDuasPrimeiras = (this.firstEntryType === 'oddEmpate' || this.secondEntryType === 'oddEmpate');
-        const visitanteNasDuasPrimeiras = (this.firstEntryType === 'oddVisitante' || this.secondEntryType === 'oddVisitante');
-
-        // Calcula o total que inclui todas as apostas (para mostrar no resultado)
-        const totalTodasApostas = (apostas.casa || 0) + (apostas.empate || 0) + (apostas.visitante || 0);
 
         // Prepara o HTML para os valores de aposta
         let htmlApostas = '';
@@ -246,26 +217,18 @@ class Calculator {
                 R$ ${this.formatNumber(resultados.visitante)}</span></li>`;
         }
 
-        // Se tiver uma terceira entrada, adiciona uma nota informativa
-        let notaTerceira = '';
-        if (terceiraEntryType) {
-            const labelTerceira = terceiraEntryType === 'oddCasa' ? labels[0] : 
-                                 (terceiraEntryType === 'oddEmpate' ? labels[1] : labels[2]);
-            notaTerceira = `<p class="small text-muted">* ${labelTerceira}: calculado independentemente das duas primeiras apostas.</p>`;
-        }
-
+        // Removemos a nota sobre a terceira entrada, já que agora todos os cálculos são iguais
         const html = `
             <div class="alert alert-success">
                 <p class="fw-bold mb-2">Valores para apostar:</p>
                 <ul class="list-unstyled mb-3">
                     ${htmlApostas}
-                    <li class="mt-2 fw-bold">→ Total: R$ ${this.formatNumber(totalTodasApostas)}</li>
+                    <li class="mt-2 fw-bold">→ Total: R$ ${this.formatNumber(totalApostado)}</li>
                 </ul>
                 <p class="fw-bold mb-2">Resultados (lucro/prejuízo):</p>
                 <ul class="list-unstyled mb-2">
                     ${htmlResultados}
                 </ul>
-                ${notaTerceira}
             </div>`;
 
         document.getElementById('resultados').innerHTML = html;
